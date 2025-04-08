@@ -67,12 +67,17 @@ public class Principal {
             .collect(Collectors.toList());
             //.toList(); o .toList me dá uma lista que não muda!!!
 
-        System.out.println("Top 5 episódios: ");
+/*        System.out.println("Top 10 episódios: ");
             dadosEpisodios.stream()
                     .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
+                    .peek(e -> System.out.println("Primeiro filtro(N/A): " + e))
                     .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
-                    .limit(5)
-                    .forEach(System.out::println);
+                    .peek(e -> System.out.println("Ordenação: " + e))
+                    .limit(10)
+                    .peek(e -> System.out.println("Limite: " + e))
+                    .map(e -> e.titulo().toUpperCase())
+                    .peek(e -> System.out.println("Mapeamento: " + e))
+                    .forEach(System.out::println);*/
 
         List<Episodio> episodios = temporadas.stream()
                 .flatMap(t -> t.episodios().stream()
@@ -81,7 +86,13 @@ public class Principal {
 
         episodios.forEach(System.out::println);
 
-        System.out.println("A partir de que ano você deseja ver os episódios? ");
+        System.out.println("Digite um trecho do titulo do episódio: ");
+        var trechoTitulo = leitura.nextLine();
+        episodios.stream()
+                .filter(e -> e.getTitulo().contains(trechoTitulo))
+                .findFirst();
+
+/*        System.out.println("A partir de que ano você deseja ver os episódios? ");
         var ano  = leitura.nextInt();
         leitura.nextLine();
 
@@ -95,6 +106,6 @@ public class Principal {
                         "Temporada: " + e.getTemporada() +
                                 " Episódio: " + e.getTitulo() +
                                 " Data lançamento: " + e.getDataDeLancamento().format(formatador)
-                ));
+                ));*/
     }
 }
